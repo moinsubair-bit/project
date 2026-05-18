@@ -79,8 +79,10 @@
   .carousel-row{ scroll-padding-left: 24px; }
   .ik-logo{ font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
   .ik-brace{ color: var(--blue); }
-  .sticky-cta{ position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 14px 24px; display:none; }
-  @media (min-width: 768px){ .sticky-cta{ display:flex; align-items:center; justify-content: space-between; gap: 16px; max-width: 1280px; margin: 0 auto; left: 50%; transform: translateX(-50%); border-radius: 16px 16px 0 0; } }
+  .sticky-cta{ position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+  @media (min-width: 768px){ .sticky-cta{ justify-content: space-between; gap: 16px; max-width: 1280px; margin: 0 auto; left: 50%; transform: translateX(-50%); border-radius: 16px 16px 0 0; padding: 14px 24px; } }
+  body{ padding-bottom: 72px; }
+  @media (min-width: 768px){ body{ padding-bottom: 0; } }
   .hero-grid-bg{
     background-image:
       radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0,155,236,0.10), transparent 70%),
@@ -145,7 +147,10 @@
       <a href="#frameworks" class="hidden lg:inline text-dim hover:text-white">Frameworks</a>
       <a href="#curriculum" class="hidden lg:inline text-dim hover:text-white">Curriculum</a>
       <a href="#advisory" class="hidden lg:inline text-dim hover:text-white">Advisory</a>
-      <a href="#apply" class="btn-primary" aria-disabled="true">Register for our Free Webinar</a>
+      <a href="#apply" class="btn-primary whitespace-nowrap" aria-disabled="true">
+        <span class="sm:hidden">Register for Free</span>
+        <span class="hidden sm:inline">Register for our Free Webinar</span>
+      </a>
     </div>
   </div>
 </header>
@@ -612,10 +617,10 @@
   </div>
 </footer>
 
-<!-- ============== STICKY CTA (desktop only) ============== -->
+<!-- ============== STICKY CTA ============== -->
 <div class="sticky-cta">
-  <div class="text-sm text-white"><span class="text-orange font-semibold">Cohort 1 · June 2026 · 30 seats.</span></div>
-  <a href="#apply" class="btn-primary" aria-disabled="true">Register for our Free Webinar</a>
+  <div class="hidden md:block text-sm text-white"><span class="text-orange font-semibold">Cohort 1 · June 2026 · 30 seats.</span></div>
+  <a href="#apply" class="btn-primary justify-center w-full md:w-auto whitespace-nowrap" aria-disabled="true">Register for our Free Webinar</a>
 </div>
 
 </body>
