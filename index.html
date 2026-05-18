@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GCC AI Studio — Lead AI in your GCC. Transform into an Agentic AI Leader.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --surface:#0A0A0A;
+    --surface-2:#111418;
+    --surface-3:#171B22;
+    --border:rgba(255,255,255,0.08);
+    --border-strong:rgba(255,255,255,0.14);
+    --text:#FFFFFF;
+    --text-dim:#A8AFBC;
+    --text-mute:#7C8597;
+    --orange:#F79009;
+    --orange-2:#EB6B2E;
+    --blue:#009BEC;
+    --blue-deep:#0078B8;
+    --blue-tint:rgba(0,155,236,0.12);
+    --orange-tint:rgba(247,144,9,0.14);
+    --red-tint:rgba(235,107,46,0.14);
+    --green:#12B76A;
+  }
+  html,body{ background: var(--bg); color: var(--text); }
+  body{ font-family: 'Inter', -apple-system, system-ui, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  .display{ font-family: 'Manrope', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+  .h-display{ font-family: 'Manrope', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+  .text-orange{ color: var(--orange); }
+  .text-orange-2{ color: var(--orange-2); }
+  .text-blue{ color: var(--blue); }
+  .text-dim{ color: var(--text-dim); }
+  .text-mute{ color: var(--text-mute); }
+  .bg-surface{ background: var(--surface); }
+  .bg-surface-2{ background: var(--surface-2); }
+  .bg-surface-3{ background: var(--surface-3); }
+  .border-soft{ border: 1px solid var(--border); }
+  .border-strong{ border: 1px solid var(--border-strong); }
+  .kicker{ font-family: 'Manrope', sans-serif; letter-spacing: 0.18em; font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--orange); }
+  .kicker-mute{ font-family: 'Manrope', sans-serif; letter-spacing: 0.18em; font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--text-mute); }
+  .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); border: 1px solid var(--border); border-radius: 16px; }
+  .card-strong{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)); border: 1px solid var(--border-strong); border-radius: 16px; }
+  .pill-blue{ display:inline-flex; align-items:center; gap:6px; background: var(--blue-tint); color: var(--blue); padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill-orange{ display:inline-flex; align-items:center; gap:6px; background: var(--orange-tint); color: var(--orange); padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill-red{ display:inline-flex; align-items:center; gap:6px; background: var(--red-tint); color: var(--orange-2); padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill-mute{ display:inline-flex; align-items:center; gap:6px; background: rgba(255,255,255,0.06); color: var(--text-dim); padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); }
+  .btn-primary{ display:inline-flex; align-items:center; gap:8px; background: var(--blue); color: #fff; padding: 14px 22px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; border-radius: 8px; transition: background .15s ease, transform .1s ease; cursor: not-allowed; }
+  .btn-primary:hover{ background: #1AABF5; }
+  .btn-ghost{ display:inline-flex; align-items:center; gap:8px; background: transparent; color: #fff; padding: 13px 22px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; border-radius: 8px; border: 1px solid var(--border-strong); cursor: not-allowed; }
+  .btn-ghost:hover{ background: rgba(255,255,255,0.04); }
+  .num-display{ font-family: 'Manrope', sans-serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  .table-clean th, .table-clean td{ padding: 16px 18px; vertical-align: top; }
+  .table-clean th{ background: rgba(255,255,255,0.04); color: var(--text); font-family: 'Manrope', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; text-align: left; border-bottom: 1px solid var(--border); }
+  .table-clean tr+tr td{ border-top: 1px solid var(--border); }
+  .table-clean tr td:first-child{ color: var(--orange); font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 22px; }
+  .ship-col{ background: rgba(0,155,236,0.04); color: var(--text); }
+  .ship-col-head{ background: rgba(0,155,236,0.08) !important; color: var(--blue) !important; }
+  .check{ color: var(--blue); }
+  .cross{ color: var(--orange-2); }
+  .ring-frame{ background: rgba(255,255,255,0.04); border: 1px solid var(--border-strong); width: 56px; height: 56px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 22px; color: var(--orange); }
+  .ring-frame-blue{ background: var(--blue-tint); border: 1px solid rgba(0,155,236,0.3); color: var(--blue); }
+  .grad-divider{ height: 1px; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
+  details > summary{ list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker{ display:none; }
+  .faq-item{ border: 1px solid var(--border); border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); }
+  .faq-item summary{ padding: 18px 22px; display:flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-item .faq-q{ font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; color: var(--text); }
+  .faq-item .faq-a{ padding: 0 22px 20px; color: var(--text-dim); font-size: 14px; line-height: 1.65; }
+  .faq-item .chev{ color: var(--text-mute); transition: transform .2s ease; }
+  .faq-item[open] .chev{ transform: rotate(180deg); color: var(--orange); }
+  .scroll-hide{ scrollbar-width: none; -ms-overflow-style: none; }
+  .scroll-hide::-webkit-scrollbar{ display: none; }
+  .carousel-row{ scroll-padding-left: 24px; }
+  .ik-logo{ font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+  .ik-brace{ color: var(--blue); }
+  .sticky-cta{ position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 14px 24px; display:none; }
+  @media (min-width: 768px){ .sticky-cta{ display:flex; align-items:center; justify-content: space-between; gap: 16px; max-width: 1280px; margin: 0 auto; left: 50%; transform: translateX(-50%); border-radius: 16px 16px 0 0; } }
+  .hero-grid-bg{
+    background-image:
+      radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0,155,236,0.10), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 60%, rgba(247,144,9,0.08), transparent 70%);
+  }
+  .accent-bar{ width: 4px; height: 28px; background: var(--orange); border-radius: 2px; display:inline-block; }
+  .ship-cell{ background: rgba(0,155,236,0.05); border-left: 2px solid rgba(0,155,236,0.25); }
+  .curriculum-table{ border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); }
+  .curriculum-header{ display: grid; grid-template-columns: 80px 22% 1fr 32%; background: rgba(255,255,255,0.04); padding: 16px 20px; gap: 20px; font-family: 'Manrope', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--text); border-bottom: 1px solid var(--border); }
+  .curriculum-header .ship-col-head{ color: var(--blue); }
+  .curriculum-row{ display: grid; grid-template-columns: 80px 22% 1fr 32%; padding: 22px 20px; gap: 20px; align-items: start; border-bottom: 1px solid var(--border); }
+  .curriculum-row:last-child{ border-bottom: none; }
+  .row-wk{ font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 22px; line-height: 1; color: var(--orange); }
+  .row-theme-title{ font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); line-height: 1.3; }
+  .row-theme-sub{ font-size: 12px; color: var(--text-mute); margin-top: 4px; line-height: 1.4; }
+  .row-do{ color: var(--text-dim); font-size: 14px; line-height: 1.65; }
+  .row-ship{ background: rgba(0,155,236,0.05); border-left: 2px solid rgba(0,155,236,0.25); padding: 14px 16px; border-radius: 6px; color: var(--text); font-size: 14px; line-height: 1.5; }
+  @media (max-width: 767px){
+    .curriculum-header{ display: none; }
+    .curriculum-row{ grid-template-columns: 1fr; gap: 14px; padding: 24px 22px; }
+    .row-wk{ font-size: 32px; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============== NAV ============== -->
+<header class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3 min-w-0">
+      <a href="#" aria-label="Interview Kickstart" class="flex items-center">
+        <svg class="h-7 md:h-8 w-auto" viewBox="0 0 600 128" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M247.233 4.76001V57.225H234.817V4.76001H247.233Z" fill="#3996D2"/>
+          <path d="M297.424 57.225H281.602L266.461 16.572C266.966 20.558 267.344 24.093 267.597 27.17C267.9 30.199 268.051 33.808 268.051 37.998V57.226H256.996V4.76001H272.44L287.961 45.49C286.851 38.576 286.297 32.065 286.297 25.959V4.76001H297.426V57.226L297.424 57.225Z" fill="#3996D2"/>
+          <path d="M343.009 4.76001L341.797 14.299H328.852V57.225H316.435V14.299H302.884V4.76001H343.009Z" fill="#3996D2"/>
+          <path d="M380.11 4.76001L378.824 13.618H360.351V26.184H376.476V34.891H360.351V48.29H380.111V57.224H347.936V4.758L380.11 4.76001Z" fill="#3996D2"/>
+          <path d="M404.972 37.164H400.125V57.227H387.709V4.76199H404.895C412.062 4.76199 417.437 6.07501 421.021 8.70001C424.655 11.323 426.472 15.337 426.472 20.737C426.472 24.118 425.663 26.943 424.049 29.216C422.434 31.438 419.886 33.33 416.403 34.895L429.727 57.229H415.72L404.972 37.164ZM400.125 28.607H405.35C408.125 28.607 410.196 27.976 411.557 26.714C412.97 25.452 413.677 23.46 413.677 20.734C413.677 18.212 412.92 16.369 411.406 15.208C409.942 14.047 407.673 13.467 404.593 13.467H400.125V28.607Z" fill="#3996D2"/>
+          <path d="M472.989 4.76001L458.379 57.225H442.935L427.794 4.76001H440.891L450.884 47.534L460.272 4.76001H472.989Z" fill="#3996D2"/>
+          <path d="M489.288 4.76001V57.225H476.872V4.76001H489.288Z" fill="#3996D2"/>
+          <path d="M531.229 4.76001L529.942 13.618H511.469V26.184H527.595V34.891H511.469V48.29H531.229V57.224H499.054V4.758L531.229 4.76001Z" fill="#3996D2"/>
+          <path d="M597.276 4.76001L588.494 57.225H572.368L565.857 17.177L558.967 57.225H543.221L534.591 4.76001H547.007L552.232 47.838L559.501 4.76001H572.522L579.336 47.838L585.469 4.76001H597.276Z" fill="#3996D2"/>
+          <path d="M247.233 69.489V121.955H234.817V69.489H247.233V69.489ZM277.365 69.489L260.635 93.035L278.729 121.955H264.345L247.614 93.944L264.269 69.489H277.365Z" fill="#FFFFFF"/>
+          <path d="M295.141 69.489V121.955H282.725V69.489H295.141V69.489Z" fill="#FFFFFF"/>
+          <path d="M326.329 68.203C329.61 68.203 332.514 68.683 335.036 69.642C337.61 70.601 340.032 72.038 342.305 73.956L336.401 80.997C334.838 79.787 333.297 78.878 331.782 78.27C330.268 77.666 328.653 77.363 326.937 77.363C323.405 77.363 320.603 78.85 318.533 81.831C316.515 84.809 315.506 89.401 315.506 95.608C315.506 101.715 316.515 106.257 318.533 109.235C320.603 112.163 323.455 113.628 327.09 113.628C329.008 113.628 330.749 113.274 332.315 112.568C333.878 111.809 335.569 110.751 337.387 109.387L342.912 116.503C340.944 118.472 338.549 120.086 335.723 121.348C332.947 122.612 329.868 123.243 326.487 123.243C321.641 123.243 317.426 122.181 313.843 120.062C310.259 117.943 307.457 114.812 305.44 110.674C303.472 106.486 302.487 101.463 302.487 95.608C302.487 89.905 303.497 84.985 305.516 80.844C307.585 76.705 310.412 73.576 313.995 71.456C317.622 69.289 321.738 68.203 326.329 68.203Z" fill="#FFFFFF"/>
+          <path d="M360.793 69.489V121.955H348.377V69.489H360.793V69.489ZM390.926 69.489L374.195 93.035L392.29 121.955H377.905L361.175 93.944L377.831 69.489H390.926Z" fill="#FFFFFF"/>
+          <path d="M412.43 68.203C416.367 68.203 419.774 68.759 422.651 69.869C425.579 70.978 428.228 72.67 430.6 74.941L424.846 81.679C421.264 78.751 417.427 77.288 413.339 77.288C411.168 77.288 409.452 77.741 408.192 78.649C406.93 79.505 406.299 80.768 406.299 82.433C406.299 83.595 406.575 84.553 407.131 85.311C407.687 86.017 408.67 86.7 410.083 87.356C411.496 88.011 413.616 88.794 416.442 89.704C421.792 91.42 425.728 93.539 428.254 96.061C430.776 98.535 432.038 102.069 432.038 106.661C432.038 109.941 431.205 112.845 429.541 115.366C427.875 117.84 425.478 119.783 422.35 121.197C419.22 122.557 415.511 123.241 411.221 123.241C406.93 123.241 403.119 122.557 399.788 121.197C396.508 119.834 393.682 118.015 391.309 115.746L397.592 108.856C399.612 110.572 401.682 111.859 403.8 112.716C405.971 113.573 408.318 114.003 410.841 114.003C413.413 114.003 415.434 113.447 416.898 112.337C418.412 111.176 419.169 109.587 419.169 107.567C419.169 106.254 418.893 105.169 418.336 104.311C417.78 103.403 416.822 102.594 415.458 101.887C414.098 101.181 412.127 100.423 409.554 99.616C403.749 97.848 399.612 95.678 397.138 93.106C394.716 90.531 393.503 87.275 393.503 83.337C393.503 80.308 394.312 77.659 395.926 75.388C397.541 73.069 399.786 71.3 402.663 70.088C405.541 68.834 408.796 68.203 412.43 68.203Z" fill="#FFFFFF"/>
+          <path d="M473.131 69.489L471.92 79.028H458.975V121.955H446.559V79.028H433.007V69.489H473.131V69.489Z" fill="#FFFFFF"/>
+          <path d="M501.845 121.955L499.117 110.675H483.825L481.177 121.955H468.307L484.129 69.489H499.194L515.016 121.955H501.845ZM485.947 101.666H497L491.472 78.5L485.947 101.666Z" fill="#FFFFFF"/>
+          <path d="M536.128 101.891H531.281V121.954H518.865V69.488H536.052C543.218 69.488 548.594 70.801 552.178 73.426C555.812 76.049 557.626 80.063 557.626 85.462C557.626 88.844 556.819 91.67 555.204 93.941C553.59 96.163 551.04 98.054 547.558 99.62L560.882 121.954H546.877L536.128 101.891ZM531.281 93.337H536.507C539.282 93.337 541.353 92.706 542.714 91.443C544.127 90.18 544.833 88.188 544.833 85.463C544.833 82.94 544.076 81.099 542.562 79.937C541.098 78.778 538.829 78.197 535.749 78.197H531.282L531.281 93.337Z" fill="#FFFFFF"/>
+          <path d="M599.998 69.489L598.788 79.028H585.843V121.955H573.426V79.028H559.875V69.489H599.998V69.489Z" fill="#FFFFFF"/>
+          <path d="M36.41 13.546C32.422 13.546 29.647 14.153 28.088 15.367C26.613 16.494 25.877 18.531 25.877 21.477V47.354C25.877 52.555 24.836 56.371 22.756 58.797C20.763 61.225 17.598 63.002 13.264 64.129C17.598 65.169 20.805 66.901 22.886 69.33C24.967 71.671 26.007 75.44 26.007 80.643V106.52C26.007 109.467 26.744 111.504 28.218 112.63C29.779 113.845 32.509 114.451 36.41 114.451V127.585C29.215 127.585 23.58 126.805 19.504 125.244C15.517 123.769 12.7 121.515 11.053 118.481C9.40499 115.446 8.582 111.502 8.582 106.647V82.07C8.582 78.171 7.976 75.482 6.761 74.008C5.547 72.447 3.294 71.667 0 71.667V56.453C3.294 56.453 5.548 55.673 6.761 54.112C7.976 52.551 8.582 49.82 8.582 45.921V21.344C8.582 16.403 9.40399 12.458 11.053 9.51099C12.7 6.47599 15.517 4.22299 19.504 2.74799C23.58 1.18599 29.214 0.406006 36.41 0.406006V13.546Z" fill="#3996D2"/>
+          <path d="M139.488 0.412994C146.683 0.412994 152.275 1.193 156.262 2.754C160.337 4.229 163.155 6.482 164.714 9.517C166.36 12.464 167.185 16.41 167.185 21.35V45.927C167.185 49.827 167.791 52.56 169.006 54.119C170.22 55.679 172.473 56.459 175.767 56.459V71.674C172.473 71.674 170.219 72.454 169.006 74.015C167.791 75.491 167.185 78.176 167.185 82.078V106.655C167.185 111.509 166.361 115.454 164.714 118.489C163.153 121.522 160.337 123.778 156.262 125.251C152.275 126.812 146.683 127.593 139.488 127.593V114.459C143.389 114.459 146.077 113.852 147.551 112.638C149.112 111.511 149.892 109.474 149.892 106.528V80.651C149.892 75.449 150.932 71.677 153.012 69.338C155.093 66.91 158.257 65.177 162.505 64.137C158.17 63.01 154.963 61.234 152.882 58.805C150.889 56.378 149.892 52.565 149.892 47.363V21.486C149.892 18.539 149.112 16.502 147.551 15.375C146.076 14.161 143.39 13.554 139.488 13.554V0.412994Z" fill="#3996D2"/>
+          <path d="M66.024 45.959V100.054H51.531V45.959H66.024V45.959Z" fill="#FFFFFF"/>
+          <path d="M58.674 18.094C61.261 18.094 63.369 18.91 65.002 20.544C66.703 22.107 67.554 24.116 67.554 26.565C67.554 29.014 66.703 31.056 65.002 32.689C63.369 34.253 61.26 35.038 58.674 35.038C56.089 35.038 53.98 34.255 52.347 32.689C50.714 31.056 49.898 29.014 49.898 26.565C49.898 24.117 50.714 22.108 52.347 20.544C53.981 18.911 56.089 18.094 58.674 18.094Z" fill="#FFFFFF"/>
+          <path d="M94.729 22.79V100.055H80.237V24.423L94.729 22.79Z" fill="#FFFFFF"/>
+          <path d="M127.594 45.959L110.345 69.74L129.125 100.053H112.692L95.239 70.453L112.591 45.958L127.594 45.959Z" fill="#FFFFFF"/>
+        </svg>
+      </a>
+      <div class="hidden sm:block text-xs text-mute ml-3 border-l pl-3" style="border-color: var(--border);">Agentic AI Leadership Lab - An Interview Kickstart X Talent 500 program</div>
+    </div>
+    <div class="flex items-center gap-6 text-sm">
+      <a href="#frameworks" class="hidden lg:inline text-dim hover:text-white">Frameworks</a>
+      <a href="#curriculum" class="hidden lg:inline text-dim hover:text-white">Curriculum</a>
+      <a href="#advisory" class="hidden lg:inline text-dim hover:text-white">Advisory</a>
+      <a href="#apply" class="btn-primary" aria-disabled="true">Register for our Free Webinar</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="border-b hero-grid-bg" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 pt-14 pb-16 md:pt-20 md:pb-24">
+    <div class="kicker mb-8">COHORT 1 · BEGINS JUNE 2026 · 30 SEATS</div>
+
+    <h1 class="display text-white leading-[0.95]" style="font-size: clamp(48px, 7vw, 84px);">
+      Lead AI in your GCC.
+    </h1>
+    <div class="display mt-3 leading-tight text-orange" style="font-size: clamp(28px, 4vw, 44px); font-weight: 600;">
+      Transform into an Agentic AI Leader.
+    </div>
+
+    <p class="mt-8 md:mt-10 text-base md:text-xl text-dim max-w-3xl leading-relaxed">
+      Eight weekends of building AI alongside <span class="text-white font-semibold">29 other GCC leaders</span>. You leave with a working initiative for your center, the language to lead it and a peer network that lasts beyond the cohort.
+    </p>
+
+    <!-- Stats row -->
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+      <div class="card p-6">
+        <div class="num-display text-5xl text-orange">8</div>
+        <div class="text-xs text-mute mt-3 leading-snug">weeks · <span class="text-white font-semibold">6 weeks build</span> + <span class="text-white font-semibold">2 weeks capstone</span></div>
+      </div>
+      <div class="card p-6">
+        <div class="num-display text-5xl text-orange">2</div>
+        <div class="text-xs text-mute mt-3 leading-snug">proprietary frameworks · <span class="text-white font-semibold">GOAT</span> + <span class="text-white font-semibold">PRIME</span></div>
+      </div>
+      <div class="card p-6">
+        <div class="num-display text-5xl text-orange">0</div>
+        <div class="text-xs text-mute mt-3 leading-snug">prior coding required</div>
+      </div>
+      <div class="card p-6">
+        <div class="num-display text-5xl text-orange">30</div>
+        <div class="text-xs text-mute mt-3 leading-snug">GCC leaders · <span class="text-white font-semibold">closed cohort</span></div>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href="#apply" class="btn-primary" aria-disabled="true">Register for our Free Webinar</a>
+      <a href="#curriculum" class="btn-ghost" aria-disabled="true">See the 8-week build <span aria-hidden="true">→</span></a>
+    </div>
+
+    <!-- Credentials strip -->
+    <p class="mt-10 text-sm text-dim leading-relaxed max-w-5xl">
+      <span class="text-orange font-bold text-base">12+</span> Years &nbsp;·&nbsp;
+      Trusted by <span class="text-orange font-bold text-base">27K+</span> Professionals &nbsp;·&nbsp;
+      <span class="text-orange font-bold text-base">700+</span> MAANG+ practitioners
+    </p>
+
+    <!-- Awards / press badges · subtle, integrated -->
+    <div class="mt-6 md:mt-8 flex items-center gap-5 sm:gap-7 opacity-90">
+      <!-- GSV 150 · 2025 (transparent PNG) -->
+      <img src="GSV150_2025@2x.png" alt="GSV 150 · 2025" class="h-14 md:h-16 w-auto" />
+
+      <!-- vertical divider -->
+      <div class="h-10 md:h-12 w-px" style="background: var(--border);"></div>
+
+      <!-- TIME · World's Top 100 EdTech Companies for 2025 -->
+      <div class="flex flex-col items-center">
+        <div style="font-family: 'Times New Roman', Georgia, serif; font-weight: 700; font-size: 28px; color: #E10E0E; letter-spacing: 0.01em; line-height: 0.95;">TIME</div>
+        <div class="mt-1.5 text-[9px] md:text-[10px] leading-tight font-semibold whitespace-nowrap text-center">
+          <span class="text-blue">World's Top 100</span> <span class="text-white">EdTech</span><br/>
+          <span class="text-white">Companies for 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== THE PROBLEM ============== -->
+<section class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-10">THE PROBLEM</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+
+      <!-- LEFT: 7% stat block -->
+      <div>
+        <div class="num-display text-orange" style="font-size: clamp(96px, 12vw, 180px);">7%</div>
+        <p class="mt-6 text-base md:text-lg text-dim leading-relaxed max-w-md">
+          of enterprises have scaled AI to ROI. <span class="text-white font-semibold">88% are running pilots that haven't reached production.</span>
+        </p>
+        <div class="mt-6 text-xs text-mute">McKinsey State of AI 2025 · n=1,993</div>
+      </div>
+
+      <!-- RIGHT: headline + body -->
+      <div>
+        <h2 class="h-display text-white leading-tight" style="font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;">India's GCCs sit at the centre of where this gets resolved.</h2>
+        <p class="hidden md:block mt-6 text-base text-dim leading-relaxed max-w-md">
+          Your HQ wants AI in production. Your team has the engineering capacity. The gap is leadership. Knowing what to build, what to govern, what to spend on, and how to bring 500 professionals along with you.
+        </p>
+        <p class="hidden md:block mt-5 text-base text-dim leading-relaxed max-w-md">
+          Agentic AI Leadership Lab is for the leaders who are tired of attending another AI keynote and want to ship something instead.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHAT YOU LEAVE WITH ============== -->
+<section class="border-b" style="border-color: var(--border); background: linear-gradient(180deg, #050608, #000);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-4">WHAT YOU LEAVE WITH</div>
+    <h2 class="h-display text-white leading-tight max-w-4xl" style="font-size: clamp(32px, 4.5vw, 44px);">Four things that change how you lead AI <span class="text-orange">on Monday morning.</span></h2>
+
+    <div class="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="card p-6 md:p-7">
+        <div class="num-display text-orange text-4xl">01</div>
+        <div class="h-display text-xl mt-4 text-white" style="font-weight: 700;">The language to set the agenda</div>
+        <p class="text-sm mt-3 text-dim leading-relaxed">GOAT for designing agents. PRIME for operating them. The proprietary language you'll bring to every vendor call, board deck, and engineering brief.</p>
+      </div>
+      <div class="card p-6 md:p-7">
+        <div class="num-display text-orange text-4xl">02</div>
+        <div class="h-display text-xl mt-4 text-white" style="font-weight: 700;">Artifacts, not arguments</div>
+        <p class="text-sm mt-3 text-dim leading-relaxed">Every week ends with something you've shipped. The final artifact: a deployed agent inside your center, or a working POC with an adoption plan.</p>
+      </div>
+      <div class="card p-6 md:p-7">
+        <div class="num-display text-orange text-4xl">03</div>
+        <div class="h-display text-xl mt-4 text-white" style="font-weight: 700;">An operating model, not theory</div>
+        <p class="text-sm mt-3 text-dim leading-relaxed">AI team design, tokenomics, governance, guardrails, security. The comprehensive toolkit that turns the frameworks into how your center actually runs AI.</p>
+      </div>
+      <div class="card p-6 md:p-7">
+        <div class="num-display text-orange text-4xl">04</div>
+        <div class="h-display text-xl mt-4 text-white" style="font-weight: 700;">Your exclusive sounding board</div>
+        <p class="text-sm mt-3 text-dim leading-relaxed">29 senior GCC peers in the same chair as you. A backchannel you'll lean on long after the cohort ends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FRAMEWORKS · PRIME + GOAT ============== -->
+<section id="frameworks" class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-4">TWO PROPRIETARY FRAMEWORKS</div>
+    <h2 class="h-display text-white leading-tight max-w-3xl" style="font-size: clamp(32px, 4.5vw, 44px);">One picks the agent. <span class="text-orange">One tells the story.</span></h2>
+    <p class="mt-4 text-dim text-lg max-w-3xl">The language an Agentic AI Leader brings to the room.</p>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <!-- PRIME -->
+      <div class="card-strong p-7 md:p-9 flex flex-col">
+        <div class="kicker-mute">FRAMEWORK 01</div>
+        <h3 class="display text-white leading-none mt-3" style="font-size: clamp(44px, 5vw, 60px);">PRIME</h3>
+        <div class="h-display text-orange mt-3" style="font-size: clamp(16px, 2vw, 20px); font-weight: 600;">Pick the first agent worth building.</div>
+
+        <div class="mt-7 grid grid-cols-5 gap-2 md:gap-3" style="min-height: 88px;">
+          <div class="flex flex-col items-center"><div class="ring-frame">P</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Process<br/>Data</div></div>
+          <div class="flex flex-col items-center"><div class="ring-frame">R</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Repeatable</div></div>
+          <div class="flex flex-col items-center"><div class="ring-frame">I</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Impact</div></div>
+          <div class="flex flex-col items-center"><div class="ring-frame">M</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Measurable</div></div>
+          <div class="flex flex-col items-center"><div class="ring-frame">E</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Economic</div></div>
+        </div>
+
+        <p class="mt-8 text-dim leading-relaxed">Five tests for ranking every workflow candidate in your center by economic impact. You'll know which agent to ship first.</p>
+
+        <div class="mt-auto pt-6 border-t kicker-mute" style="border-color: var(--border); margin-top: auto; padding-top: 1.5rem;">FROM WEEK 2 ONWARDS · YOUR PRIORITIZATION LENS</div>
+      </div>
+
+      <!-- GOAT -->
+      <div class="card-strong p-7 md:p-9 flex flex-col">
+        <div class="kicker-mute">FRAMEWORK 02</div>
+        <h3 class="display text-white leading-none mt-3" style="font-size: clamp(44px, 5vw, 60px);">GOAT</h3>
+        <div class="h-display text-orange mt-3" style="font-size: clamp(16px, 2vw, 20px); font-weight: 600;">Every story follows the same scaffold:</div>
+
+        <div class="mt-7 flex items-start gap-2 md:gap-3" style="min-height: 88px;">
+          <div class="flex-1 flex flex-col items-center"><div class="ring-frame">G</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Goal</div></div>
+          <span class="text-base font-bold pt-4 text-orange">→</span>
+          <div class="flex-1 flex flex-col items-center"><div class="ring-frame">O</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Observe</div></div>
+          <span class="text-base font-bold pt-4 text-orange">→</span>
+          <div class="flex-1 flex flex-col items-center"><div class="ring-frame">A</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Agentic</div></div>
+          <span class="text-base font-bold pt-4 text-orange">→</span>
+          <div class="flex-1 flex flex-col items-center"><div class="ring-frame">T</div><div class="text-[10px] text-mute mt-2 text-center leading-tight">Transform</div></div>
+        </div>
+
+        <p class="mt-8 text-dim leading-relaxed">What's the business goal? What's happening today? What agents did we design? What changed?</p>
+
+        <div class="mt-auto pt-6 border-t kicker-mute" style="border-color: var(--border); margin-top: auto; padding-top: 1.5rem;">FROM WEEK 3 ONWARDS · YOUR DESIGN AND BRIEFING SCAFFOLD</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== CURRICULUM ============== -->
+<section id="curriculum" class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-4">THE 8-WEEK BUILD</div>
+    <h2 class="h-display text-white leading-tight max-w-3xl" style="font-size: clamp(32px, 4.5vw, 44px);">Six weeks of building. Two weeks of capstone. <span class="text-orange">Every week ends with something you've shipped.</span></h2>
+    <p class="mt-4 text-dim text-lg max-w-3xl">Each week's artifact is what you ship. Real output, not coursework.</p>
+
+    <div class="mt-10 curriculum-table">
+
+      <div class="curriculum-header">
+        <div>Wk</div>
+        <div>Theme</div>
+        <div>What you do</div>
+        <div class="ship-col-head">What you ship</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">1</div>
+        <div>
+          <div class="row-theme-title">The Mirror</div>
+          <div class="row-theme-sub">From AI Foundations to the Frontier</div>
+        </div>
+        <div class="row-do">Take the AIQ diagnostic to place your center against the cohort. Sit through the <span class="text-white font-semibold">Frontier Briefing Series</span> by our founders, the 2026 baseline for what AI actually does.</div>
+        <div class="row-ship">Your org AIQ vs. cohort average, plus a clear-eyed view of where to focus.</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">2</div>
+        <div>
+          <div class="row-theme-title">The X-Ray</div>
+          <div class="row-theme-sub">Driving ROI via Agentic Process Re-engineering</div>
+        </div>
+        <div class="row-do">Introduction to <span class="text-white font-semibold">GOAT</span> and <span class="text-white font-semibold">PRIME</span>, two proprietary frameworks for designing and running agents. Case studies on agentic re-engineering across functions.</div>
+        <div class="row-ship">Your workflow mapped through the framework, ready for redesign.</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">3</div>
+        <div>
+          <div class="row-theme-title">The Redesign</div>
+          <div class="row-theme-sub">Your workflow, refactored agentic-first</div>
+        </div>
+        <div class="row-do">Spot the failure modes that derail most agentic redesigns. Hands-on AI Process Redesign workshop.</div>
+        <div class="row-ship">Redesigned process in share-ready format.</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">4</div>
+        <div>
+          <div class="row-theme-title">The Build</div>
+          <div class="row-theme-sub">Building for productivity</div>
+        </div>
+        <div class="row-do">Leveraging AI for personal productivity with Co-Pilot, Co-Work, Gamma and more. Building your first skills.md, your agent's instruction primer.</div>
+        <div class="row-ship">Productivity stack plus your first skills.md.</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">5</div>
+        <div>
+          <div class="row-theme-title">The Agent</div>
+          <div class="row-theme-sub">Build your first agent</div>
+        </div>
+        <div class="row-do">Build two agents in n8n and Zapier. One simple, one multi-step. Built by you, not commissioned, not delegated.</div>
+        <div class="row-ship">Two agents you built yourself, yours to keep, ship, and extend.</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">6</div>
+        <div>
+          <div class="row-theme-title">The Toolkit</div>
+          <div class="row-theme-sub">Tokens, Teams, Traceability, Operating Model and more</div>
+        </div>
+        <div class="row-do">How to set up AI teams and Agentic Leadership levels. Governance, guardrails, and security. Tokenomics and ethical AI.</div>
+        <div class="row-ship">A comprehensive toolkit, tuned to your org's operating reality.</div>
+      </div>
+
+      <div class="curriculum-row">
+        <div class="row-wk">7&ndash;8</div>
+        <div>
+          <div class="row-theme-title">Capstone Project</div>
+          <div class="row-theme-sub">Different projects for different functions.</div>
+        </div>
+        <div class="row-do">Take a process or problem in your respective function. From diagnosis to unlocking AI opportunities in your business.</div>
+        <div class="row-ship">Your capstone end to end and a compounding skillset.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== CAPSTONE TRACKS ============== -->
+<section class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-4">TWO CAPSTONE TRACKS</div>
+    <h2 class="h-display text-white leading-tight max-w-3xl" style="font-size: clamp(32px, 4.5vw, 44px);">Built or backed. <span class="text-orange">You pick the one your org can absorb.</span></h2>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="card-strong p-7 md:p-9">
+        <div class="pill-blue">TRACK A · BUILT</div>
+        <h3 class="h-display text-2xl mt-4 text-white" style="font-weight: 700;">Ship a working agent in your org.</h3>
+        <ul class="mt-6 space-y-3 text-sm">
+          <li class="flex gap-3 text-dim"><span class="check">✓</span><span>A deployed sub-agent in production or controlled rollout in your GCC</span></li>
+          <li class="flex gap-3 text-dim"><span class="check">✓</span><span>Logs, traces, and a tokenomics model for the workload</span></li>
+        </ul>
+      </div>
+      <div class="card-strong p-7 md:p-9">
+        <div class="pill-orange">TRACK B · BACKED</div>
+        <h3 class="h-display text-2xl mt-4 text-white" style="font-weight: 700;">Ship a charter your org will back.</h3>
+        <ul class="mt-6 space-y-3 text-sm">
+          <li class="flex gap-3 text-dim"><span class="check">✓</span><span>A working POC, ready to hand off</span></li>
+          <li class="flex gap-3 text-dim"><span class="check">✓</span><span>Adoption plan with milestones and ownership</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 py-5 border-t border-b flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6" style="border-color: var(--border);">
+      <div class="kicker whitespace-nowrap">SAMPLE FUNCTIONS</div>
+      <div class="h-display text-base md:text-lg text-orange" style="font-weight: 500;">Sales &nbsp;·&nbsp; Finance &nbsp;·&nbsp; HR &nbsp;·&nbsp; Marketing &nbsp;·&nbsp; and more</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHY THIS NOT THAT ============== -->
+<section class="border-b" style="border-color: var(--border); background: linear-gradient(180deg, #050608, #000);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-4">WHY THIS, NOT THAT</div>
+    <h2 class="h-display text-white leading-tight max-w-4xl" style="font-size: clamp(28px, 4vw, 40px);">Most AI programs for senior leaders end with a deck.<br/><span class="text-orange">This one ends with agents running in your GCC.</span></h2>
+    <p class="mt-4 text-dim text-lg max-w-3xl">A clean read on where most senior-leader AI programs land, and where we go instead.</p>
+
+    <div class="mt-12 card-strong overflow-hidden">
+
+      <div class="grid grid-cols-2">
+        <div class="p-4 md:p-6" style="border-top: 3px solid var(--orange-2);">
+          <div class="kicker" style="color: var(--orange-2);">WHAT THEY SELL</div>
+        </div>
+        <div class="p-4 md:p-6" style="border-top: 3px solid var(--blue); border-left: 1px solid var(--border);">
+          <div class="kicker" style="color: var(--blue);">WHAT WE BUILD</div>
+        </div>
+      </div>
+
+      <!-- Pair 1 -->
+      <div class="grid grid-cols-2 border-t" style="border-color: var(--border);">
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-dim">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--red-tint); color: var(--orange-2); font-size: 12px;">&#10005;</span>
+          <span>Pre-recorded video. 2&ndash;3 live sessions across 20&ndash;30 weeks.</span>
+        </div>
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-white border-l" style="border-color: var(--border);">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--blue-tint); color: var(--blue); font-size: 12px;">&#10003;</span>
+          <span>Live weekend sessions with AI-first founders and practitioners from MAANG+</span>
+        </div>
+      </div>
+
+      <!-- Pair 2 -->
+      <div class="grid grid-cols-2 border-t" style="border-color: var(--border);">
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-dim">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--red-tint); color: var(--orange-2); font-size: 12px;">&#10005;</span>
+          <span>GenAI modules listed as <em>optional, ungraded</em>.</span>
+        </div>
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-white border-l" style="border-color: var(--border);">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--blue-tint); color: var(--blue); font-size: 12px;">&#10003;</span>
+          <span>Building is the program. Every week you ship an artifact.</span>
+        </div>
+      </div>
+
+      <!-- Pair 3 -->
+      <div class="grid grid-cols-2 border-t" style="border-color: var(--border);">
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-dim">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--red-tint); color: var(--orange-2); font-size: 12px;">&#10005;</span>
+          <span>Anyone with a graduate degree and 10+ years of work experience.</span>
+        </div>
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-white border-l" style="border-color: var(--border);">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--blue-tint); color: var(--blue); font-size: 12px;">&#10003;</span>
+          <span>GCC leaders only. A closed cohort of 30.</span>
+        </div>
+      </div>
+
+      <!-- Pair 4 -->
+      <div class="grid grid-cols-2 border-t" style="border-color: var(--border);">
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-dim">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--red-tint); color: var(--orange-2); font-size: 12px;">&#10005;</span>
+          <span>An AI implementation deck and an exec ed certificate.</span>
+        </div>
+        <div class="p-4 md:p-6 flex gap-3 items-start text-sm md:text-base leading-relaxed text-white border-l" style="border-color: var(--border);">
+          <span class="flex-shrink-0 inline-flex items-center justify-center rounded-full font-bold mt-0.5" style="width: 22px; height: 22px; background: var(--blue-tint); color: var(--blue); font-size: 12px;">&#10003;</span>
+          <span>Deployed agents, proprietary frameworks, and a comprehensive operational toolkit.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== ADVISORY BOARD ============== -->
+<section id="advisory" class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div class="kicker mb-4">ADVISORY BOARD</div>
+    <h2 class="h-display text-white leading-tight max-w-4xl" style="font-size: clamp(28px, 4vw, 40px);">Backed by leaders, founders, and investors <span class="text-orange">who've built India's AI.</span></h2>
+    <p class="mt-4 text-dim text-lg max-w-3xl">Five strategic advisors stress-testing the curriculum, opening doors, and showing up for selected sessions.</p>
+
+    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-5">
+
+      <div class="card p-6">
+        <div class="h-display text-white text-lg leading-tight" style="font-weight: 700;">Ryan Valles</div>
+        <div class="text-xs text-mute mt-3 leading-relaxed">Founder &amp; CEO, Interview Kickstart &amp; Acceler · ex-Accel Partners</div>
+      </div>
+
+      <div class="card p-6">
+        <div class="h-display text-white text-lg leading-tight" style="font-weight: 700;">Anshuman Bapna</div>
+        <div class="text-xs text-mute mt-3 leading-relaxed">ex-Google · ex-MakeMyTrip · IIT &amp; Stanford</div>
+      </div>
+
+      <div class="card p-6">
+        <div class="h-display text-white text-lg leading-tight" style="font-weight: 700;">Vikram Ahuja</div>
+        <div class="text-xs text-mute mt-3 leading-relaxed">CEO, ANSR · India's largest GCC incubator</div>
+      </div>
+
+      <div class="card p-6">
+        <div class="h-display text-white text-lg leading-tight" style="font-weight: 700;">Sandeep Kachru</div>
+        <div class="text-xs text-mute mt-3 leading-relaxed">ex-Meta · ex-Google · ex-Amazon</div>
+      </div>
+
+      <div class="card p-6">
+        <div class="h-display text-white text-lg leading-tight" style="font-weight: 700;">Karthik Reddy</div>
+        <div class="text-xs text-mute mt-3 leading-relaxed">Co-Founder &amp; Managing Partner, Blume Ventures</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHO THIS IS FOR ============== -->
+<section class="border-b" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
+    <div>
+      <div class="kicker mb-4">WHO THIS IS FOR</div>
+      <h3 class="h-display text-2xl md:text-3xl text-white leading-tight" style="font-weight: 700;">GCC leaders with a seat at the table.</h3>
+
+      <div class="mt-6 flex flex-wrap gap-2">
+        <span class="pill-mute">Center Heads &amp; Site Leads</span>
+        <span class="pill-mute">Vice Presidents</span>
+        <span class="pill-mute">Heads of Strategy &amp; Transformation</span>
+        <span class="pill-mute">Heads of Function</span>
+        <span class="pill-mute">Senior Directors</span>
+      </div>
+
+      <p class="mt-6 text-dim text-sm">Accountable for AI in your center, whether or not you grew up writing code.</p>
+    </div>
+    <div>
+      <div class="kicker mb-4" style="color: var(--orange-2);">NOT FOR YOU IF</div>
+      <h3 class="h-display text-2xl md:text-3xl text-dim leading-tight" style="font-weight: 700;">Some honest exclusions.</h3>
+      <ul class="mt-6 space-y-4 text-sm">
+        <li class="flex gap-3 text-dim"><span class="cross">✕</span><span><span class="text-white font-semibold">You're early-career or a hands-on engineer.</span> Our Edge Up offering is the right fit.</span></li>
+        <li class="flex gap-3 text-dim"><span class="cross">✕</span><span><span class="text-white font-semibold">You're hunting for a LinkedIn certificate.</span> We optimize for what you build.</span></li>
+        <li class="flex gap-3 text-dim"><span class="cross">✕</span><span><span class="text-white font-semibold">You can't commit to 8 weeks of live build.</span> The cohort rewards showing up.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FINAL CTA ============== -->
+<section style="background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,155,236,0.10), transparent 70%), #000;">
+  <div class="max-w-7xl mx-auto px-6 py-20 md:py-28 text-center">
+    <div class="kicker mb-6">COHORT 1 · BEGINS JUNE 2026</div>
+    <h2 class="display text-white leading-[0.95] max-w-4xl mx-auto" style="font-size: clamp(40px, 5vw, 64px);">
+      30 seats.<br/>
+      <span class="text-orange" style="font-weight: 600;">Closed cohort.</span>
+    </h2>
+    <div class="mt-10 inline-flex">
+      <a href="#apply" class="btn-primary" aria-disabled="true">Register for our Free Webinar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="border-t" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 py-10 text-xs text-mute">
+    <div class="text-white font-semibold">Agentic AI Leadership Lab - An Interview Kickstart X Talent 500 program</div>
+  </div>
+</footer>
+
+<!-- ============== STICKY CTA (desktop only) ============== -->
+<div class="sticky-cta">
+  <div class="text-sm text-white"><span class="text-orange font-semibold">Cohort 1 · June 2026 · 30 seats.</span></div>
+  <a href="#apply" class="btn-primary" aria-disabled="true">Register for our Free Webinar</a>
+</div>
+
+</body>
+</html>
